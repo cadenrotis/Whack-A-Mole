@@ -41,7 +41,7 @@ public class WhackAMoleViewModel extends AndroidViewModel {
     private int currentScoreNum = 0;
     private int numLives = 3;
     private int spawnTimeInMs = 4000; // starting spawn time for moles is 4 seconds
-    private int moleVisibleTimeInMs = 1500; // starting time mole is visible is 1.5 seconds
+    private int moleVisibleTimeInMs = 1500; // mole is visible is 1.5 seconds
 
     /**
      * Handler to post the Runnables that show and hide the moles
@@ -62,9 +62,6 @@ public class WhackAMoleViewModel extends AndroidViewModel {
             if (canSpawn) {
                 // Trigger mole appearance
                 showMole();
-
-                // Adjust spawn time for increased difficulty
-                increaseDifficulty();
 
                 // Schedule next spawn
                 handler.postAtTime(this, SystemClock.uptimeMillis() + spawnTimeInMs);
@@ -99,6 +96,10 @@ public class WhackAMoleViewModel extends AndroidViewModel {
         handler.post(updateMoleSpawnTime);
         currentScoreNum += 10;
         currentScore.setValue(currentScoreNum);
+        hideMole();
+
+        // Adjust spawn time for increased difficulty
+        increaseDifficulty();
     }
 
     /**
