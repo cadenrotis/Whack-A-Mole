@@ -18,17 +18,60 @@
         app:srcCompat="@drawable/rectangle" />
 
     <TextView
-        android:id="@+id/score"
+        android:id="@+id/currentScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:text="Score: 0"
         android:textColor="@color/yellow"
         android:textColorLink="@color/yellow"
-        android:textSize="60sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/headerBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/amountLives"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="280dp"
+        android:text="Lives: 0"
+        android:textColor="@color/yellow"
+        android:textColorLink="@color/yellow"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/headerBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/highScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="High score: 0"
+        android:textColor="@color/yellow"
+        android:textColorLink="@color/yellow"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/headerBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.445" />
+
+    <TextView
+        android:id="@+id/gameOver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="108dp"
+        android:text="Game Over!"
+        android:textColor="@android:color/holo_red_light"
+        android:textColorLink="@color/yellow"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/headerBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TableLayout
         android:id="@+id/tableLayout"
@@ -280,5 +323,18 @@
                 app:srcCompat="@drawable/mole" />
         </TableRow>
     </TableLayout>
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="120dp"
+        android:layout_height="53dp"
+        android:layout_columnWeight="1"
+        android:backgroundTint="@android:color/holo_orange_light"
+        android:text="@string/startButton"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
