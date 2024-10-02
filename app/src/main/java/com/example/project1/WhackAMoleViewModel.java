@@ -41,12 +41,17 @@ public class WhackAMoleViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> currentMoleLocation = new MutableLiveData<>(-1);
 
     /**
+     * Runnable used to schedule the hiding of the mole either after time runs out or it is clicked.
+     */
+    private Runnable hideMoleRunnable;
+
+    /**
      * Integer variables used for keeping track of scores, lives, spawn time, and visible time of moles
      */
     private int currentScoreNum = 0;
     private int numLives = 3;
     private int spawnTimeInMs = 4000; // starting spawn time for moles is 4 seconds
-    private int moleVisibleTimeInMs = 1500; // mole is visible is 1.5 seconds
+    private int moleVisibleTimeInMs = 2000; // mole is visible is 2 seconds
 
     /**
      * Handler to post the Runnables that show and hide the moles
@@ -103,6 +108,7 @@ public class WhackAMoleViewModel extends AndroidViewModel {
      */
     private void showMole() {
         System.out.println("In showMole()");
+
         // If a mole is already showing, hide it.
         if (currentMoleLocation.getValue() >= 0) {
             System.out.println("currentMoleLocation not set");
@@ -113,12 +119,13 @@ public class WhackAMoleViewModel extends AndroidViewModel {
         currentMoleLocation.setValue(new Random().nextInt(12));
 
         // Schedule the mole to disappear after a set time (moleVisibleTimeInMs)
-        handler.postDelayed(new Runnable() {
+        hideMoleRunnable = new Runnable() {
             @Override
             public void run() {
                 hideMole();
             }
-        }, moleVisibleTimeInMs);
+        };
+        handler.postDelayed(hideMoleRunnable, moleVisibleTimeInMs);
     }
 
     /**
@@ -126,6 +133,12 @@ public class WhackAMoleViewModel extends AndroidViewModel {
      */
     private void hideMole() {
         System.out.println("In hideMole()");
+
+        // Cancel any pending hideMole runnables if the mole is clicked or hidden early
+        if (hideMoleRunnable != null) {
+            handler.removeCallbacks(hideMoleRunnable);
+        }
+
         if (currentMoleLocation.getValue() >= 0) {
             System.out.println("hid mole at moleHills[" + currentMoleLocation.getValue() + "]");
             currentMoleLocation.setValue(-1);
@@ -139,11 +152,13 @@ public class WhackAMoleViewModel extends AndroidViewModel {
      */
     public void moleHillClicked(int moleHill) {
         System.out.println("In moleHillClicked()");
+
         if (moleHill == currentMoleLocation.getValue()) {
             currentScoreNum += 10;
             currentScore.setValue(currentScoreNum);
+
+            // Hide the mole and cancel pending hideMole runnables
             hideMole();
-            handler.post(updateMoleSpawnTime);
 
             // Adjust spawn time for increased difficulty
             increaseDifficulty();
@@ -161,7 +176,7 @@ public class WhackAMoleViewModel extends AndroidViewModel {
             spawnTimeInMs -= 100; // Decrease spawn time by 100ms
         }
         if (moleVisibleTimeInMs > 500) {
-            moleVisibleTimeInMs -= 50; // Decrease mole visible time by 50ms
+            moleVisibleTimeInMs -= 200; // Decrease mole visible time by 50ms
         }
     }
 
