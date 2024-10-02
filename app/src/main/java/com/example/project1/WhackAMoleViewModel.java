@@ -81,9 +81,19 @@ public class WhackAMoleViewModel extends AndroidViewModel {
     public void startGame() {
         System.out.println("In startGame()");
         gameRunning = true;
+        handler.post(updateMoleSpawnTime);
+
+        // reset user's current score to 0
+        currentScoreNum = 0;
+        currentScore.setValue(currentScoreNum);
+
+        // reset number of lives to 3
         numLives = 3;
         amountLives.setValue(numLives);
-        handler.post(updateMoleSpawnTime);
+
+        // reset spawn time and visible time for the moles
+        spawnTimeInMs = 4000;
+        moleVisibleTimeInMs = 2000;
     }
 
     /**
@@ -189,7 +199,8 @@ public class WhackAMoleViewModel extends AndroidViewModel {
         if (numLives > 0) {
             numLives--;
             amountLives.setValue(numLives);
-        } else {
+        }
+        if(numLives == 0) {
             stopGame();
             gameOver.setValue(true);
             updateHighScore();
