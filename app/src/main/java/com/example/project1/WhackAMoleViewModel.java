@@ -41,11 +41,6 @@ public class WhackAMoleViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> currentMoleLocation = new MutableLiveData<>(-1);
 
     /**
-     * Array of booleans to keep track of if a molehill has a mole in it.
-     */
-    private final boolean[] moleHills = new boolean[12];
-
-    /**
      * Integer variables used for keeping track of scores, lives, spawn time, and visible time of moles
      */
     private int currentScoreNum = 0;
@@ -114,7 +109,6 @@ public class WhackAMoleViewModel extends AndroidViewModel {
 
         // Pick a random number between 1 and 12 for the 12 possible MoleHills
         currentMoleLocation.setValue(new Random().nextInt(12));
-        moleHills[currentMoleLocation.getValue()] = true;
 
         // Schedule the mole to disappear after a set time (moleVisibleTimeInMs)
         handler.postDelayed(new Runnable() {
@@ -132,7 +126,6 @@ public class WhackAMoleViewModel extends AndroidViewModel {
         System.out.println("In hideMole()");
         if (currentMoleLocation.getValue() >= 0) {
             System.out.println("hid mole at moleHills[" + currentMoleLocation.getValue() + "]");
-            moleHills[currentMoleLocation.getValue()] = false;
             currentMoleLocation.setValue(-1);
         } else {
             System.out.println("No moles to hide.");
@@ -144,8 +137,7 @@ public class WhackAMoleViewModel extends AndroidViewModel {
      */
     public void moleHillClicked(int moleHill) {
         System.out.println("In moleHillClicked()");
-        int temp = currentMoleLocation.getValue();
-        if (moleHill == temp) { // Could also use: moleHill == currentMoleLocation.getValue() or moleHills[moleHill]?
+        if (moleHill == currentMoleLocation.getValue()) {
             currentScoreNum += 10;
             currentScore.setValue(currentScoreNum);
             hideMole();
