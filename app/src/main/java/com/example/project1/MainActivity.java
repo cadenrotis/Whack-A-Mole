@@ -1,9 +1,9 @@
 package com.example.project1;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,18 +32,18 @@ public class MainActivity extends AppCompatActivity {
         /**
          * Get references to UI elements
          */
-        ImageView mole1 = findViewById(R.id.mole1);
-        ImageView mole2 = findViewById(R.id.mole2);
-        ImageView mole3 = findViewById(R.id.mole3);
-        ImageView mole4 = findViewById(R.id.mole4);
-        ImageView mole5 = findViewById(R.id.mole5);
-        ImageView mole6 = findViewById(R.id.mole6);
-        ImageView mole7 = findViewById(R.id.mole7);
-        ImageView mole8 = findViewById(R.id.mole8);
-        ImageView mole9 = findViewById(R.id.mole9);
-        ImageView mole10 = findViewById(R.id.mole10);
-        ImageView mole11 = findViewById(R.id.mole11);
-        ImageView mole12 = findViewById(R.id.mole12);
+        ImageButton mole1 = findViewById(R.id.mole1);
+        ImageButton mole2 = findViewById(R.id.mole2);
+        ImageButton mole3 = findViewById(R.id.mole3);
+        ImageButton mole4 = findViewById(R.id.mole4);
+        ImageButton mole5 = findViewById(R.id.mole5);
+        ImageButton mole6 = findViewById(R.id.mole6);
+        ImageButton mole7 = findViewById(R.id.mole7);
+        ImageButton mole8 = findViewById(R.id.mole8);
+        ImageButton mole9 = findViewById(R.id.mole9);
+        ImageButton mole10 = findViewById(R.id.mole10);
+        ImageButton mole11 = findViewById(R.id.mole11);
+        ImageButton mole12 = findViewById(R.id.mole12);
 
         currentScore = findViewById(R.id.currentScore);
         highScore = findViewById(R.id.highScore);
@@ -55,17 +55,34 @@ public class MainActivity extends AppCompatActivity {
         gameOver.setVisibility(TextView.INVISIBLE); // game over text should be invisible by default
 
         // Create an array of all the mole ImageViews for easy access
-        ImageView[] moleViews = {mole1, mole2, mole3, mole4, mole5, mole6, mole7, mole8, mole9, mole10, mole11, mole12};
+        ImageView[] moleButtons = {mole1, mole2, mole3, mole4, mole5, mole6, mole7, mole8, mole9, mole10, mole11, mole12};
 
         /**
          * At the beginning of the game, show no moles on the screen.
          */
-        InitializeMoles(moleViews);
+        HideMoles(moleButtons);
 
         /**
          * Initialize the WhatAMoleViewModel instance.
          */
         whackAMoleViewModel = new ViewModelProvider(this).get(WhackAMoleViewModel.class);
+
+        /**
+         * Update the mole picked to be visible in the UI
+         */
+        whackAMoleViewModel.getMoleLocation().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer visibleMoleId) {
+                // Hide all moles
+                HideMoles(moleButtons);
+
+                // Show the mole corresponding to the visibleMoleId
+                if (visibleMoleId >= 1) {
+                    moleButtons[visibleMoleId - 1].setAlpha(1f);
+
+                }
+            }
+        });
 
         /**
          * Update the text in the UI that displays the user's current score.
@@ -117,24 +134,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         /**
-         * Update the mole picked to be visible in the UI
-         */
-        whackAMoleViewModel.getVisibleMole().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer visibleMoleId) {
-                // Hide all moles
-                for (ImageView moleView : moleViews) {
-                    moleView.setVisibility(ImageView.INVISIBLE);
-                }
-
-                // Show the mole corresponding to the visibleMoleId
-                if (visibleMoleId >= 1) {
-                    moleViews[visibleMoleId - 1].setVisibility(ImageView.VISIBLE);
-                }
-            }
-        });
-
-        /**
          * Starts spawning the moles
          */
         startBtn.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         mole1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whackAMoleViewModel.moleClicked();
+                whackAMoleViewModel.moleHillClicked(1);
             }
         });
 
@@ -163,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         mole2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whackAMoleViewModel.moleClicked();
+                whackAMoleViewModel.moleHillClicked(2);
             }
         });
 
@@ -173,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         mole3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whackAMoleViewModel.moleClicked();
+                whackAMoleViewModel.moleHillClicked(3);
             }
         });
 
@@ -183,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
         mole4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whackAMoleViewModel.moleClicked();
+                whackAMoleViewModel.moleHillClicked(4);
             }
         });
 
@@ -193,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         mole5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whackAMoleViewModel.moleClicked();
+                whackAMoleViewModel.moleHillClicked(5);
             }
         });
 
@@ -203,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         mole6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whackAMoleViewModel.moleClicked();
+                whackAMoleViewModel.moleHillClicked(6);
             }
         });
 
@@ -213,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
         mole7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whackAMoleViewModel.moleClicked();
+                whackAMoleViewModel.moleHillClicked(7);
             }
         });
 
@@ -223,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
         mole8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whackAMoleViewModel.moleClicked();
+                whackAMoleViewModel.moleHillClicked(8);
             }
         });
 
@@ -233,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
         mole9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whackAMoleViewModel.moleClicked();
+                whackAMoleViewModel.moleHillClicked(9);
             }
         });
 
@@ -243,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
         mole10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whackAMoleViewModel.moleClicked();
+                whackAMoleViewModel.moleHillClicked(10);
             }
         });
 
@@ -253,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         mole11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whackAMoleViewModel.moleClicked();
+                whackAMoleViewModel.moleHillClicked(11);
             }
         });
 
@@ -263,18 +262,19 @@ public class MainActivity extends AppCompatActivity {
         mole12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whackAMoleViewModel.moleClicked();
+                whackAMoleViewModel.moleHillClicked(12);
             }
         });
     }
 
     /**
      * Hide all moles.
-     * @param moleViews an array containing all of the moles (ImageViews) to be hidden.
+     * @param moleButtons an array containing all of the moles (ImageViews) to be hidden.
      */
-    public void InitializeMoles(ImageView[] moleViews) {
-        for (ImageView moleView : moleViews) {
-            moleView.setVisibility(ImageView.INVISIBLE);
+    public void HideMoles(ImageView[] moleButtons) {
+        for (ImageView moleButton : moleButtons) {
+            moleButton.setAlpha(0f);
+
         }
     }
 }
