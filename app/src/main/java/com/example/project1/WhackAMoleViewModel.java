@@ -76,6 +76,8 @@ public class WhackAMoleViewModel extends AndroidViewModel {
     public void startGame() {
         System.out.println("In startGame()");
         gameRunning = true;
+        numLives = 3;
+        amountLives.setValue(numLives);
         handler.post(updateMoleSpawnTime);
     }
 
@@ -168,11 +170,11 @@ public class WhackAMoleViewModel extends AndroidViewModel {
      */
     public void loseALife() {
         System.out.println("In loseALife()");
-        numLives--;
-        amountLives.setValue(numLives);
-
         // no lives are left, so stop the game
-        if (numLives <= 0) {
+        if (numLives > 0) {
+            numLives--;
+            amountLives.setValue(numLives);
+        } else {
             stopGame();
             gameOver.setValue(true);
             updateHighScore();
