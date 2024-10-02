@@ -110,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
                     // show some sort of game over screen and stop the game
                     gameOver.setVisibility(TextView.VISIBLE);
                     whackAMoleViewModel.stopGame();
+                    startBtn.setVisibility(View.VISIBLE);
+                    startBtn.setClickable(true);
                 }
             }
         });
@@ -138,7 +140,10 @@ public class MainActivity extends AppCompatActivity {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                gameOver.setVisibility(TextView.INVISIBLE);
                 whackAMoleViewModel.startGame();
+                startBtn.setVisibility(View.INVISIBLE);
+                startBtn.setClickable(false);
             }
         });
 
