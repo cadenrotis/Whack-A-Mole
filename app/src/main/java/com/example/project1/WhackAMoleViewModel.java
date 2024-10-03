@@ -126,7 +126,7 @@ public class WhackAMoleViewModel extends AndroidViewModel {
         }
 
         // Pick a random number between 1 and 12 for the 12 possible MoleHills
-        currentMoleLocation.setValue(new Random().nextInt(12));
+        currentMoleLocation.setValue(new Random().nextInt(12) + 1);
 
         // Schedule the mole to disappear after a set time (moleVisibleTimeInMs)
         hideMoleRunnable = new Runnable() {
