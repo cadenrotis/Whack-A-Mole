@@ -133,6 +133,7 @@ public class WhackAMoleViewModel extends AndroidViewModel {
             @Override
             public void run() {
                 hideMole();
+                loseALife();
             }
         };
         handler.postDelayed(hideMoleRunnable, moleVisibleTimeInMs);
@@ -162,7 +163,6 @@ public class WhackAMoleViewModel extends AndroidViewModel {
      */
     public void moleHillClicked(int moleHill) {
         System.out.println("In moleHillClicked()");
-
         if (moleHill == currentMoleLocation.getValue()) {
             currentScoreNum += 10;
             currentScore.setValue(currentScoreNum);
@@ -172,8 +172,6 @@ public class WhackAMoleViewModel extends AndroidViewModel {
 
             // Adjust spawn time for increased difficulty
             increaseDifficulty();
-        } else {
-            loseALife();
         }
     }
 
