@@ -11,10 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+/**
+ * The main activity for the app, acting as the controller in our MVC pattern
+ */
 public class MainActivity extends AppCompatActivity {
 
     /**
-     * Instance of the viewmodel and textviews
+     * Instance of the ViewModel and TextViews
      */
     private WhackAMoleViewModel whackAMoleViewModel;
     private TextView currentScore;
@@ -23,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView gameOver;
     private Button startBtn;
 
+    /**
+     * Overridden onCreate() method to initialize all UI elements and call functions from the ViewModel
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         /**
-         * Get references to UI elements
+         * Get references to all of the moles in the UI
          */
         ImageButton mole1 = findViewById(R.id.mole1);
         ImageButton mole2 = findViewById(R.id.mole2);
@@ -45,16 +51,24 @@ public class MainActivity extends AppCompatActivity {
         ImageButton mole11 = findViewById(R.id.mole11);
         ImageButton mole12 = findViewById(R.id.mole12);
 
+        /**
+         * Get references to the all of the TextViews in the UI
+         */
         currentScore = findViewById(R.id.currentScore);
         highScore = findViewById(R.id.highScore);
         numOfLives = findViewById(R.id.amountLives);
         gameOver = findViewById(R.id.gameOver);
 
+        /**
+         * Get a reference to the start button
+         */
         startBtn = findViewById(R.id.startButton);
 
         gameOver.setVisibility(TextView.INVISIBLE); // game over text should be invisible by default
 
-        // Create an array of all the mole ImageViews for easy access
+        /**
+         * Create an array of all the mole ImageViews for easy access
+         */
         ImageView[] moleButtons = {mole1, mole2, mole3, mole4, mole5, mole6, mole7, mole8, mole9, mole10, mole11, mole12};
 
         /**
