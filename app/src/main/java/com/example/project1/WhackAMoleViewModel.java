@@ -123,6 +123,7 @@ public class WhackAMoleViewModel extends AndroidViewModel {
         if (currentMoleLocation.getValue() >= 0) {
             System.out.println("currentMoleLocation not set");
             hideMole();
+            loseALife();
         }
 
         // Pick a random number between 1 and 12 for the 12 possible MoleHills
@@ -180,11 +181,11 @@ public class WhackAMoleViewModel extends AndroidViewModel {
      */
     private void increaseDifficulty() {
         System.out.println("In increaseDifficulty()");
-        if (spawnTimeInMs > 500) {
-            spawnTimeInMs -= 100; // Decrease spawn time by 100ms
+        if (spawnTimeInMs > 600) {
+            spawnTimeInMs *= 0.9; // Decrease spawn time by 10%
         }
         if (moleVisibleTimeInMs > 500) {
-            moleVisibleTimeInMs -= 200; // Decrease mole visible time by 50ms
+            moleVisibleTimeInMs *= 0.95; // Decrease mole visible time by 10%
         }
     }
 
